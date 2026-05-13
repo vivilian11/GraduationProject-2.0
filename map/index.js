@@ -1,5 +1,5 @@
 // 1. 引入配置文件获取 Key
-const config = require('./config.js');
+const config = require('../../config.js');
 const db = wx.cloud.database();
 const _ = db.command;
 

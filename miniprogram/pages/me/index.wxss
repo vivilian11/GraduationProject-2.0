@@ -1,89 +1,69 @@
-/* pages/me/index.wxss */
-.me-container {
-  background-color: #f7f7f7;
-  min-height: 100vh;
-}
+page { background-color: #f7f8fa; }
+.me-container { display: flex; flex-direction: column; }
 
-/* 头部卡片 */
+/* 头部名片 */
+.user-header {
+  background: linear-gradient(180deg, #07C160 0%, #059a4d 100%);
+  height: 380rpx;
+  padding: 100rpx 40rpx 0;
+  box-sizing: border-box;
+}
 .user-card {
-  background-color: #07c160;
-  height: 350rpx;
+  background: #fff;
+  border-radius: 30rpx;
+  padding: 40rpx;
   display: flex;
   align-items: center;
-  padding: 0 50rpx;
-  border-radius: 0 0 40rpx 40rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.1);
+  position: relative;
 }
-
-/* 头像按钮：去掉原生样式 */
-.avatar-wrapper {
-  padding: 0;
-  width: 140rpx !important;
-  height: 140rpx !important;
-  border-radius: 50%;
-  margin-right: 30rpx;
-  margin-left: 0;
-  border: 4rpx solid rgba(255, 255, 255, 0.4);
-  background: none;
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  border: 4rpx solid #eee;
 }
+.user-info { margin-left: 30rpx; display: flex; flex-direction: column; }
+.user-nickname { font-size: 36rpx; font-weight: bold; color: #333; }
+.user-id { font-size: 24rpx; color: #999; margin-top: 8rpx; }
 
-.avatar {
-  width: 140rpx;
-  height: 140rpx;
-  border-radius: 50%;
+.points-badge {
+  position: absolute;
+  right: 40rpx;
+  text-align: center;
+  background: #f0fdf4;
+  padding: 15rpx 25rpx;
+  border-radius: 20rpx;
+  border: 2rpx solid #e8f5e9;
 }
+.points-val { font-size: 36rpx; font-weight: bold; color: #07C160; display: block; }
+.points-unit { font-size: 20rpx; color: #666; }
 
-.nickname-input {
-  color: white;
-  font-size: 40rpx;
-  font-weight: bold;
-  height: 60rpx;
-}
-
-.user-id {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 24rpx;
-  margin-top: 10rpx;
-  display: block;
-}
-
-/* 菜单列表样式 */
+/* 列表菜单 */
 .menu-list {
   margin: -40rpx 30rpx 0;
-  background: white;
-  border-radius: 20rpx;
-  overflow: hidden;
-  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05);
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 10rpx 0;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.03);
 }
-
-.menu-item, .menu-item-btn {
+.menu-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 35rpx 40rpx;
-  border-bottom: 1rpx solid #f0f0f0;
-  background: white !important;
+  padding: 35rpx 30rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-left { display: flex; align-items: center; }
+.menu-icon { font-size: 36rpx; margin-right: 20rpx; }
+.menu-text { font-size: 30rpx; color: #333; }
+.menu-arrow { color: #ccc; font-size: 24rpx; }
+
+/* 修正Button默认样式 */
+.btn-clear {
   width: 100% !important;
+  background: none !important;
   font-weight: normal !important;
-  line-height: 1 !important;
-}
-
-.menu-text {
-  font-size: 30rpx;
-  color: #333;
-}
-
-.arrow {
-  color: #ccc;
-  font-size: 30rpx;
-}
-
-.logout-text {
-  color: #e64340;
-}
-
-.footer {
-  text-align: center;
-  color: #bbb;
-  font-size: 24rpx;
-  margin-top: 60rpx;
+  line-height: normal !important;
 }

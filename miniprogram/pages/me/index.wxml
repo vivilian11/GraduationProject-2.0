@@ -1,32 +1,58 @@
-<!--pages/me/index.wxml-->
 <view class="me-container">
-  <view class="user-card">
-    <button class="avatar-wrapper" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
-      <image class="avatar" src="{{userInfo.avatarUrl || '/images/avatar.png'}}"></image>
-    </button>
-    <view class="nickname-box">
-      <input type="nickname" class="nickname-input" placeholder="点击设置昵称" bindblur="onInputNickname" value="{{userInfo.nickName}}"/>
-      <text class="user-id">环保ID: {{openidShort}}</text>
+  <view class="user-header">
+    <view class="user-card">
+      <image class="user-avatar" src="{{userInfo.avatarUrl || '../../images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="user-info">
+        <text class="user-nickname">{{userInfo.nickName || '环保小卫士'}}</text>
+        <text class="user-id">ID: {{shortOpenId}}</text>
+      </view>
+      <view class="points-badge">
+        <text class="points-val">{{userInfo.points || 0}}</text>
+        <text class="points-unit">积分</text>
+      </view>
     </view>
   </view>
 
   <view class="menu-list">
-    <button class="menu-item-btn" open-type="feedback">
-      <text class="menu-text">问题反馈</text>
-      <text class="arrow">></text>
+    <view class="menu-item" bindtap="navTo" data-url="point-history">
+      <view class="menu-left">
+        <text class="menu-icon">📊</text>
+        <text class="menu-text">积分明细</text>
+      </view>
+      <text class="menu-arrow">〉</text>
+    </view>
+
+    <view class="menu-item" bindtap="navTo" 
+    data-url="appointment">
+      <view class="menu-left">
+        <text class="menu-icon">📅</text>
+        <text class="menu-text">我的预约</text>
+      </view>
+      <text class="menu-arrow">〉</text>
+    </view>
+
+    <view class="menu-item" bindtap="navTo" data-url="garbage-records">
+      <view class="menu-left">
+        <text class="menu-icon">🔍</text>
+        <text class="menu-text">识别记录</text>
+      </view>
+      <text class="menu-arrow">〉</text>
+    </view>
+
+    <button class="menu-item btn-clear" open-type="feedback">
+      <view class="menu-left">
+        <text class="menu-icon">✍️</text>
+        <text class="menu-text">意见反馈</text>
+      </view>
+      <text class="menu-arrow">〉</text>
     </button>
 
-    <view class="menu-item" bindtap="showHelp">
-      <text class="menu-text">帮助中心</text>
-      <text class="arrow">></text>
+    <view class="menu-item" bindtap="navTo" data-url="help-center">
+      <view class="menu-left">
+        <text class="menu-icon">❓</text>
+        <text class="menu-text">帮助中心</text>
+      </view>
+      <text class="menu-arrow">〉</text>
     </view>
-
-    <view class="menu-item" bindtap="logout">
-      <text class="menu-text logout-text">退出登录</text>
-    </view>
-  </view>
-
-  <view class="footer">
-    <text>智能垃圾分类助手 v1.0</text>
   </view>
 </view>

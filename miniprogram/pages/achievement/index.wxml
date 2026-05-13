@@ -1,22 +1,67 @@
 <view class="container">
   <view class="points-header">
-    <text class="points-title">我的累计积分</text>
-    <text class="points-number">{{totalPoints}}</text>
-    <text class="points-unit">分</text>
+    <view class="points-card">
+      <text class="points-label">当前总积分</text>
+      <view class="points-value-row">
+        <text class="points-num">{{totalPoints}}</text>
+        <text class="points-unit">分</text>
+      </view>
+    </view>
   </view>
 
   <view class="badge-wall">
-    <view class="wall-title">勋章成就</view>
-    
+    <view class="wall-title-box">
+      <text class="wall-title">勋章成就墙</text>
+      <text class="wall-subtitle">点亮绿色荣誉</text>
+    </view>
+
     <view class="badge-grid">
       <block wx:for="{{badgeList}}" wx:key="id">
-        <view class="badge-item {{item.isUnlocked ? '' : 'locked'}}">
-          <image src="{{item.icon}}" class="badge-icon"></image>
+        <view 
+          class="badge-item {{ ((item.id <= 3 && totalPoints >= item.threshold) || (item.id > 3 && item.isOwned)) ? '' : 'locked' }}" 
+          bindtap="onBadgeTap" 
+          data-item="{{item}}"
+        >
+          <view class="badge-icon-wrap">
+            <image src="{{item.icon}}" class="badge-icon" mode="aspectFit"></image>
+            <view class="lock-icon" wx:if="{{!((item.id <= 3 && totalPoints >= item.threshold) || (item.id > 3 && item.isOwned))}}">
+              <text class="icon-lock">🔒</text>
+            </view>
+          </view>
+          
           <text class="badge-name">{{item.name}}</text>
-          <text class="badge-desc" wx:if="{{!item.isUnlocked}}">{{item.threshold}}分后解锁</text>
-          <text class="badge-status" wx:else>已解锁</text>
+          
+          <view class="status-tag {{ ((item.id <= 3 && totalPoints >= item.threshold) || (item.id > 3 && item.isOwned)) ? 'tag-unlocked' : 'tag-locked' }}">
+            <text wx:if="{{item.id <= 3}}">{{totalPoints >= item.threshold ? '已达成' : item.threshold + '分点亮'}}</text>
+            <text wx:else>{{item.isOwned ? '已拥有' : '10积分兑换'}}</text>
+          </view>
         </view>
       </block>
     </view>
+  </view>
+</view>
+
+<view class="modal-mask" wx:if="{{showModal}}" bindtap="closeModal"></view>
+<view class="modal-content {{showModal ? 'modal-show' : ''}}">
+  <view class="modal-header">
+    <text>勋章兑换</text>
+    <view class="modal-close" bindtap="closeModal">✕</view>
+  </view>
+  <view class="modal-body">
+    <image src="{{selectedBadge.icon}}" class="modal-badge-img"></image>
+    <text class="modal-badge-name">{{selectedBadge.name}}</text>
+    <text class="modal-badge-desc">消耗 10 积分兑换此荣誉勋章，点亮你的成就墙！</text>
+    <view class="modal-points-info">
+      <text>当前积分：{{totalPoints}}</text>
+      <text class="cost-text">所需积分：-10</text>
+    </view>
+  </view>
+  <view class="modal-footer">
+    <button 
+      class="btn-confirm {{totalPoints < 10 ? 'btn-disabled' : ''}}" 
+      bindtap="confirmRedeem"
+    >
+      {{totalPoints < 10 ? '积分不足' : '立即兑换'}}
+    </button>
   </view>
 </view>

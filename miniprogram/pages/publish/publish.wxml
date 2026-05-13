@@ -1,0 +1,31 @@
+<view class="container">
+  <view class="header">
+    <text class="cancel-btn" bindtap="goBack">取消</text>
+    <button class="publish-btn {{!content && images.length === 0 ? 'disabled' : ''}}" bindtap="onPublish">发布</button>
+  </view>
+
+  <textarea 
+    class="content-input" 
+    placeholder="分享你的环保心得，或者记录一次分类点滴..." 
+    bindinput="onContentInput" 
+    maxlength="500">
+  </textarea>
+
+  <view class="image-section">
+    <view class="image-grid">
+      <view class="image-item" wx:for="{{images}}" wx:key="*this">
+        <image src="{{item}}" mode="aspectFill" class="img"></image>
+        <view class="delete-icon" bindtap="removeImage" data-index="{{index}}">×</view>
+      </view>
+      
+      <view class="add-image-btn" bindtap="chooseImage" wx:if="{{images.length < 9}}">
+        <text class="plus">+</text>
+      </view>
+    </view>
+    <text class="image-tip">{{images.length}}/9</text>
+  </view>
+
+  <view class="footer-btn" bindtap="likePost" data-id="{{item._id}}" data-index="{{index}}">
+  <text>{{item.isLiked ? '❤️' : '🤍'}} {{item.likeCount || 0}}</text>
+  </view>
+</view>

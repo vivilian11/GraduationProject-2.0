@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="tab-header">
+    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" bindtap="switchTab" data-index="0">预约回收</view>
+    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-index="1">预约记录</view>
+  </view>
+
+  <view class="form-section" wx:if="{{currentTab === 0}}">
+    <view class="input-group">
+      <text class="label">联系人</text>
+      <input placeholder="怎么称呼您？" bindinput="onInput" data-field="name" />
+    </view>
+    <view class="input-group">
+      <text class="label">联系电话</text>
+      <input type="number" placeholder="师傅方便联系您" bindinput="onInput" data-field="phone" />
+    </view>
+    <view class="input-group">
+      <text class="label">详细地址</text>
+      <textarea placeholder="请输入具体的楼栋和门牌号" bindinput="onInput" data-field="address"></textarea>
+    </view>
+    <view class="input-group">
+      <text class="label">垃圾名称</text>
+      <input placeholder="例如：废旧报纸、旧电视机" bindinput="onInput" data-field="garbageName" />
+    </view>
+    
+    <button class="submit-btn" bindtap="submitAppo">立即预约上门</button>
+  </view>
+
+  <scroll-view class="record-section" wx:if="{{currentTab === 1}}" scroll-y>
+    <view class="record-card" wx:for="{{myAppos}}" wx:key="_id">
+      <view class="card-header">
+        <text class="garbage-tag">{{item.garbageName}}</text>
+        <text class="status-tag status-{{item.status}}">{{item.status === 2 ? '已回收' : (item.status === 1 ? '处理中' : '待处理')}}</text>
+      </view>
+      <view class="card-body">
+        <text>📍 {{item.address}}</text>
+        <text>⏰ 预约于：{{item.dateString}}</text>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{myAppos.length === 0}}">暂无记录哦</view>
+  </scroll-view>
+</view>

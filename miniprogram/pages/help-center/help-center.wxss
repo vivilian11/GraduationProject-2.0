@@ -1,0 +1,58 @@
+page { background-color: #f7f8fa; }
+.container { padding: 40rpx 30rpx; }
+
+.header { margin-bottom: 50rpx; }
+.title { font-size: 42rpx; font-weight: bold; color: #333; display: block; }
+.subtitle { font-size: 26rpx; color: #999; margin-top: 10rpx; }
+
+.faq-list { width: 100%; }
+
+.faq-item {
+  background: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.03);
+}
+
+.faq-question {
+  padding: 34rpx 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.q-text { font-size: 30rpx; font-weight: 500; color: #333; }
+.q-arrow { 
+  font-size: 24rpx; color: #ccc; 
+  transition: transform 0.3s; /* 旋转动画 */
+}
+.arrow-down { transform: rotate(90deg); }
+
+/* 回答内容的动态展示 */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  background: #fafafa;
+}
+
+.answer-show {
+  max-height: 300rpx; /* 给一个足够大的高度 */
+  padding-bottom: 30rpx;
+}
+
+.a-text {
+  display: block;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  color: #666;
+}
+
+.footer-tip {
+  margin-top: 60rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #bbb;
+}

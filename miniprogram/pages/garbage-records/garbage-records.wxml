@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="header">
+    <text class="title">识别记录</text>
+    <text class="subtitle">回顾你的环保足迹</text>
+  </view>
+
+  <scroll-view class="record-list" scroll-y wx:if="{{records.length > 0}}">
+    <view class="record-card" wx:for="{{records}}" wx:key="_id">
+      <image class="record-img" src="{{item.imgUrl || '/images/tabber/text.png'}}" mode="aspectFill"></image>
+      
+      <view class="record-info">
+        <view class="info-top">
+          <text class="garbage-name">{{item.name}}</text>
+          <text class="type-tag {{item.type === '有害垃圾' ? 'tag-hazardous' : (item.type === '可回收物' ? 'tag-recyclable' : (item.type === '厨余垃圾' ? 'tag-kitchen' : 'tag-other'))}}">{{item.type}}</text>
+        </view>
+        <text class="record-time">{{item.dateString}}</text>
+      </view>
+    </view>
+    <view class="no-more">只展示最近 20 条记录哦~</view>
+  </scroll-view>
+
+  <view class="empty-box" wx:else>
+    <text class="empty-txt">还没有识别记录，快去首页试试吧！</text>
+  </view>
+</view>

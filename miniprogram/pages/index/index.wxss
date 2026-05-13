@@ -1,73 +1,231 @@
-/* pages/index/index.wxss */
-.container {
-  padding: 40rpx;
+/* ─── 基础样式 ─────────────────────────────────────────── */
+.container { padding: 40rpx; display: flex; flex-direction: column; align-items: center; }
+.header { margin-top: 40rpx; text-align: center; }
+.title { font-size: 48rpx; font-weight: bold; color: #07C160; display: block; }
+.subtitle { font-size: 28rpx; color: #888; margin-top: 10rpx; }
+
+/* ─── 功能网格 ─────────────────────────────────────────── */
+.function-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 60rpx;
+}
+.grid-item {
+  width: 46%;
+  background: #fff;
+  margin-bottom: 30rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 35rpx 0;
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.06);
 }
-
-.header {
-  margin-top: 40rpx;
-  text-align: center;
-}
-
-.title {
-  font-size: 48rpx;
-  font-weight: bold;
-  color: #07C160; /* 环保绿 */
-  display: block;
-}
-
-.subtitle {
-  font-size: 28rpx;
-  color: #888;
-  margin-top: 10rpx;
-}
-
-.main-action {
-  margin-top: 80rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.camera-btn {
-  width: 350rpx;
-  height: 350rpx;
-  background-color: #f0fdf4;
-  border: 4rpx dashed #07C160;
+.icon-wrap {
+  width: 110rpx;
+  height: 110rpx;
   border-radius: 50%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 10rpx 20rpx rgba(7, 193, 96, 0.1);
-}
-
-.camera-img {
-  width: 120rpx;
-  height: 120rpx;
   margin-bottom: 20rpx;
 }
+.color1 { background-color: #E8F5E9; }
+.color2 { background-color: #E3F2FD; }
+.color3 { background-color: #FFF3E0; }
+.color4 { background-color: #F3E5F5; }
+.grid-img { width: 60rpx; height: 60rpx; }
+.grid-item text { font-size: 28rpx; color: #333; font-weight: 500; }
 
-.tip {
-  margin-top: 30rpx;
-  font-size: 24rpx;
-  color: #b2b2b2;
-}
-
+/* ─── 小贴士卡片 ───────────────────────────────────────── */
 .info-card {
-  margin-top: 100rpx;
+  margin-top: 30rpx;
   width: 100%;
   background: #fff;
   border-radius: 20rpx;
   padding: 30rpx;
   box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+  box-sizing: border-box;
+}
+.card-title { font-weight: bold; font-size: 32rpx; margin-bottom: 10rpx; color: #333; }
+
+/* ─── 底部栏 ────────────────────────────────────────────── */
+.bottom-bar {
+  margin-top: 40rpx;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.points-box, .quiz-btn {
+  width: 47%;
+  height: 150rpx;
+  border-radius: 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.points-box { background: #fdfdfd; border: 2rpx solid #efefef; }
+.points-box .label { font-size: 22rpx; color: #999; }
+.points-box .value { font-size: 44rpx; font-weight: bold; color: #07C160; }
+.quiz-btn { background: #07C160; color: #fff; box-shadow: 0 10rpx 20rpx rgba(7,193,96,0.2); }
+.quiz-btn text { font-size: 30rpx; font-weight: bold; }
+.quiz-btn .btn-tip { font-size: 20rpx; opacity: 0.8; margin-top: 5rpx; }
+
+/* ─── 图鉴弹窗遮罩 ─────────────────────────────────────── */
+.atlas-mask {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.45);
+  z-index: 100;
 }
 
-.card-title {
-  font-weight: bold;
-  font-size: 32rpx;
-  margin-bottom: 10rpx;
+/* ─── 图鉴弹窗主体（从底部滑入）──────────────────────────── */
+.atlas-panel {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 80vh;
+  background: #f7f8fa;
+  border-radius: 32rpx 32rpx 0 0;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+.atlas-panel-show {
+  transform: translateY(0);
+}
+
+/* ─── 弹窗头部 ─────────────────────────────────────────── */
+.atlas-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 36rpx 40rpx 20rpx;
+  position: relative;
+  flex-shrink: 0;
+}
+.atlas-title { font-size: 36rpx; font-weight: bold; color: #333; }
+.atlas-close {
+  position: absolute;
+  right: 40rpx;
+  font-size: 36rpx;
+  color: #999;
+  padding: 10rpx;
+}
+
+/* ─── 搜索栏 ────────────────────────────────────────────── */
+.atlas-search-bar {
+  margin: 0 32rpx 24rpx;
+  background: #fff;
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 28rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+  flex-shrink: 0;
+}
+.atlas-search-input {
+  flex: 1;
+  height: 80rpx;
+  font-size: 28rpx;
   color: #333;
+}
+.atlas-search-clear { font-size: 28rpx; color: #bbb; padding: 10rpx; }
+
+/* ─── 加载 / 空状态 ─────────────────────────────────────── */
+.atlas-loading, .atlas-empty {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #bbb;
+  font-size: 28rpx;
+}
+
+/* ─── 滚动区域 ─────────────────────────────────────────── */
+.atlas-scroll {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ─── 网格布局 ─────────────────────────────────────────── */
+.atlas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20rpx 30rpx; 
+  justify-content: space-between; 
+}
+
+/* ─── 卡片 ──────────────────────────────────────────────── */
+.atlas-card {
+  width: 47%; /* 2列布局的关键，解决中间空隙太大的问题 */
+  background: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 24rpx;
+  padding: 24rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+  box-sizing: border-box; /* 保证 padding 不撑开盒子 */
+}
+
+.atlas-card-img-wrap {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 16rpx;
+}
+
+.atlas-card-img {
+  width: 100%;
+  height: 100%;
+}
+
+.atlas-card-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+/* ─── 标签颜色显示 ─── */
+.atlas-tag-box {
+  padding: 4rpx 16rpx;
+  border-radius: 30rpx;
+  margin-bottom: 12rpx;
+}
+
+.atlas-tag-box text {
+  font-size: 20rpx;
+  font-weight: bold;
+}
+
+/* 确保数据库里的 type 是数字 0, 1, 2, 3 */
+.type-0 { background-color: #E3F2FD; } /* 可回收 - 蓝色 */
+.type-0 text { color: #1976D2; }
+
+.type-1 { background-color: #FFEBEE; } /* 有害 - 红色 */
+.type-1 text { color: #D32F2F; }
+
+.type-2 { background-color: #E8F5E9; } /* 厨余 - 绿色 */
+.type-2 text { color: #388E3C; }
+
+.type-3 { background-color: #F5F5F5; } /* 其他 - 灰色 */
+.type-3 text { color: #616161; }
+
+.atlas-card-tip {
+  font-size: 20rpx;
+  color: #999;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* 限制显示两行 */
+  overflow: hidden;
 }

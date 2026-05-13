@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="header-card">
+    <text class="header-title">积分记录</text>
+    <text class="header-subtitle">记录你的每一次环保点滴</text>
+  </view>
+
+  <scroll-view class="history-list" scroll-y wx:if="{{logs.length > 0}}">
+    <view class="log-item" wx:for="{{logs}}" wx:key="_id">
+      <view class="log-left">
+        <text class="log-desc">{{item.actionDesc}}</text>
+        <text class="log-date">{{item.dateString}}</text>
+      </view>
+      <view class="log-right">
+        <text class="points-tag {{item.pointsAdded > 0 ? 'plus' : 'minus'}}">
+          {{item.pointsAdded > 0 ? '+' : ''}}{{item.pointsAdded}}
+        </text>
+      </view>
+    </view>
+    <view class="no-more">—— 没有更多记录了 ——</view>
+  </scroll-view>
+
+  <view class="empty-state" wx:else>
+    <image class="empty-img" src="/images/empty-history.png" mode="aspectFit"></image>
+    <text>暂无积分记录，快去参与分类吧！</text>
+  </view>
+</view>

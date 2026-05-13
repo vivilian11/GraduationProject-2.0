@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="header">
+    <text class="title">帮助中心</text>
+    <text class="subtitle">解决你的分类小困惑</text>
+  </view>
+
+  <view class="faq-list">
+    <block wx:for="{{faqList}}" wx:key="id">
+      <view class="faq-item">
+        <view class="faq-question" bindtap="toggleFaq" data-index="{{index}}">
+          <text class="q-text">{{item.question}}</text>
+          <text class="q-arrow {{item.isOpen ? 'arrow-down' : ''}}">〉</text>
+        </view>
+        
+        <view class="faq-answer {{item.isOpen ? 'answer-show' : ''}}">
+          <text class="a-text">{{item.answer}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <view class="footer-tip">
+    <text>如果还有疑问，请点击“意见反馈”联系我们哦~</text>
+  </view>
+</view>

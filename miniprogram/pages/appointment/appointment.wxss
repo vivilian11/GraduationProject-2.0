@@ -1,0 +1,17 @@
+page { background: #f7f8fa; }
+.tab-header { display: flex; background: #fff; padding: 20rpx 0; margin-bottom: 20rpx; }
+.tab-item { flex: 1; text-align: center; font-size: 30rpx; color: #999; position: relative; }
+.tab-item.active { color: #07C160; font-weight: bold; }
+.tab-item.active:after { content: ""; position: absolute; bottom: -10rpx; left: 25%; width: 50%; height: 4rpx; background: #07C160; }
+
+.form-section { padding: 30rpx; background: #fff; margin: 20rpx; border-radius: 20rpx; }
+.input-group { margin-bottom: 30rpx; border-bottom: 1rpx solid #eee; padding-bottom: 10rpx; }
+.label { font-size: 26rpx; color: #666; display: block; margin-bottom: 10rpx; }
+.submit-btn { background: #07C160; color: #fff; border-radius: 50rpx; margin-top: 50rpx; }
+
+.record-card { background: #fff; margin: 20rpx; padding: 30rpx; border-radius: 20rpx; box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05); }
+.card-header { display: flex; justify-content: space-between; margin-bottom: 20rpx; }
+.status-tag { font-size: 22rpx; padding: 4rpx 12rpx; border-radius: 6rpx; }
+.status-0 { background: #fff7e6; color: #fa8c16; } /* 待处理-橙色 */
+.status-1 { background: #f6ffed; color: #3f33ebc6; } /* 处理中-蓝色 */
+.status-2 { background: #f6ffed; color: #52c41a; } /* 已完成-绿色 */

@@ -4,17 +4,108 @@
     <text class="subtitle">让地球更绿，让分类更简单</text>
   </view>
 
-  <view class="main-action">
-    <view class="camera-btn" bindtap="onTakePhoto">
-      <image src="../../images/tabber/index.png"
-      class="camera-img"></image>
-      <text>点击拍照/上传图片</text>
+  <view class="function-grid">
+    <view class="grid-item" bindtap="onTakePhoto">
+      <view class="icon-wrap color1">
+        <image src="../../images/tabber/index.png" class="grid-img"></image>
+      </view>
+      <text>拍照/上传</text>
     </view>
-    <text class="tip">支持识别生活垃圾、厨余垃圾等</text>
+    <view class="grid-item" bindtap="onTextIdentify">
+      <view class="icon-wrap color2">
+        <image src="../../images/tabber/text.png" class="grid-img"></image>
+      </view>
+      <text>文字识别</text>
+    </view>
+  
+    <view class="grid-item" bindtap="onOpenAtlas">
+      <view class="icon-wrap color3">
+        <image src="../../images/tabber/atlas.png" class="grid-img"></image>
+      </view>
+      <text>分类图鉴</text>
+    </view>
+    <view class="grid-item" bindtap="onCheckIn">
+      <view class="icon-wrap color4">
+        <image src="../../images/tabber/checkin.png" class="grid-img"></image>
+      </view>
+      <text>每日签到</text>
+    </view>
   </view>
 
   <view class="info-card">
-  <view class="card-title">分类小贴士</view>
-  <text class="card-content">{{currentTip}}</text>
- </view>
+    <view class="card-title">分类小贴士</view>
+    <text class="card-content">{{currentTip}}</text>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="points-box">
+      <text class="label">累计总积分</text>
+      <text class="value">{{totalPoints}}</text>
+    </view>
+    <view class="quiz-btn" bindtap="onStartQuiz">
+      <text>环保知识问答</text>
+      <text class="btn-tip">答对得2分</text>
+    </view>
+  </view>
+</view>
+
+<!-- ─── 分类图鉴弹窗 ─────────────────────────────────────── -->
+<view class="atlas-mask" wx:if="{{atlasVisible}}" bindtap="onCloseAtlas"></view>
+
+<view class="atlas-panel {{atlasVisible ? 'atlas-panel-show' : ''}}">
+
+  <!-- 弹窗头部 -->
+  <view class="atlas-header">
+    <text class="atlas-title">分类图鉴</text>
+    <view class="atlas-close" bindtap="onCloseAtlas">✕</view>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="atlas-search-bar">
+    <input
+      class="atlas-search-input"
+      placeholder="搜索垃圾名称或分类"
+      value="{{atlasSearchKeyword}}"
+      bindinput="onAtlasSearch"
+    />
+    <view
+      class="atlas-search-clear"
+      wx:if="{{atlasSearchKeyword}}"
+      bindtap="onAtlasClear"
+    >✕</view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="atlas-loading" wx:if="{{atlasLoading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 无结果 -->
+  <view class="atlas-empty" wx:elif="{{atlasShowList.length === 0}}">
+    <text>未找到相关垃圾条目</text>
+  </view>
+
+  <!-- 网格卡片列表 -->
+  <scroll-view class="atlas-scroll" scroll-y wx:else>
+  <view class="atlas-grid">
+    <view class="atlas-card" wx:for="{{atlasShowList}}" wx:key="_id">
+      <view class="atlas-card-img-wrap">
+        <image
+          class="atlas-card-img"
+          src="{{item.displayUrl}}" 
+          mode="aspectFit"
+        ></image>
+      </view>
+      
+      <text class="atlas-card-name">{{item.name}}</text>
+      
+      <view class="atlas-tag-box type-{{item.type}}">
+        <text>{{item.typeLabel}}</text>
+      </view>
+      
+      <text class="atlas-card-tip">{{item.tip}}</text>
+    </view>
+  </view>
+</scroll-view>
+
 </view>

@@ -1,0 +1,205 @@
+/* pages/community/community.wxss */
+page {
+  background-color: #f6f7f9;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* 1. 顶部 Tab 切换 */
+.tab-box {
+  display: flex;
+  background: #fff;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  font-size: 30rpx;
+  color: #888;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  color: #07c160;
+  font-weight: bold;
+}
+
+.tab-item.active::after {
+  content: "";
+  display: block;
+  width: 40rpx;
+  height: 6rpx;
+  background: #07c160;
+  border-radius: 3rpx;
+  margin: 10rpx auto 0;
+}
+
+/* 2. 生态圈动态列表 */
+.feed-scroll {
+  flex: 1;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.post-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.post-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #eee;
+}
+
+.post-user-info {
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.post-user-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.post-time {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.post-content {
+  font-size: 28rpx;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+}
+
+.post-imgs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.single-img {
+  width: 100%;
+  border-radius: 12rpx;
+  max-height: 400rpx;
+}
+
+.post-footer {
+  display: flex;
+  border-top: 1rpx solid #f2f2f2;
+  padding-top: 20rpx;
+}
+
+.footer-btn {
+  margin-right: 40rpx;
+  font-size: 26rpx;
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+/* 3. 排行榜列表 */
+.rank-list {
+  background: #fff;
+  padding: 0 30rpx;
+}
+
+.rank-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+
+.rank-num {
+  width: 60rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #999;
+  font-style: italic;
+}
+
+.top-three {
+  color: #07c160;
+  font-size: 40rpx;
+}
+
+.rank-avatar {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+  margin: 0 20rpx;
+  background: #f0f0f0;
+}
+
+.rank-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.rank-points {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #07c160;
+}
+
+/* 4. 发布悬浮按钮 */
+.add-btn {
+  position: fixed;
+  right: 40rpx;
+  bottom: 60rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: #07c160;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 60rpx;
+  box-shadow: 0 8rpx 20rpx rgba(7, 193, 96, 0.3);
+  z-index: 99;
+}
+
+.comment-area {
+  background: #f8f8f8;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-top: 20rpx;
+}
+.comment-item {
+  font-size: 26rpx;
+  margin-bottom: 10rpx;
+  line-height: 1.5;
+}
+.comment-user { color: #576b95; font-weight: bold; }
+.comment-content { color: #333; }
+.multi-img { width: 32%; height: 200rpx; border-radius: 8rpx; }
+.no-more { text-align: center; color: #ccc; font-size: 24rpx; padding: 40rpx; }

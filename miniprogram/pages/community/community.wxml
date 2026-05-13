@@ -1,0 +1,66 @@
+<view class="container">
+  <view class="tab-box">
+    <view class="tab-item {{currentTab === 'feed' ? 'active' : ''}}" bindtap="switchTab" data-tab="feed">生态圈</view>
+    <view class="tab-item {{currentTab === 'rank' ? 'active' : ''}}" bindtap="switchTab" data-tab="rank">排行榜</view>
+  </view>
+
+  <block wx:if="{{currentTab === 'feed'}}">
+    <scroll-view scroll-y class="feed-scroll">
+      <view class="post-card" wx:for="{{posts}}" wx:key="_id">
+        <view class="post-header">
+          <image class="post-avatar" src="{{item.authorAvatar}}" mode="aspectFill"></image>
+          <view class="post-user-info">
+            <text class="post-user-name">{{item.authorName}}</text>
+            <text class="post-time">{{item.dateString}}</text>
+          </view>
+        </view>
+
+        <view class="post-content">{{item.content}}</view>
+
+        <view class="post-imgs" wx:if="{{item.images.length > 0}}">
+          <image 
+            wx:for="{{item.images}}" 
+            wx:for-item="img" 
+            wx:key="*this" 
+            src="{{img}}" 
+            mode="aspectFill" 
+            class="{{item.images.length === 1 ? 'single-img' : 'multi-img'}}"
+            bindtap="previewImg"
+            data-current="{{img}}"
+            data-urls="{{item.images}}"
+          ></image>
+        </view>
+
+        <view class="post-footer">
+          <view class="footer-btn" bindtap="likePost" data-id="{{item._id}}" data-index="{{index}}">
+            <text>❤️ {{item.likeCount || 0}}</text>
+          </view>
+          <view class="footer-btn" bindtap="onCommentTap" data-id="{{item._id}}">
+            <text>💬 评论</text>
+          </view>
+        </view>
+
+        <view class="comment-area" wx:if="{{item.comments && item.comments.length > 0}}">
+          <view class="comment-item" wx:for="{{item.comments}}" wx:for-item="comment" wx:key="_id">
+            <text class="comment-user">{{comment.authorName}}：</text>
+            <text class="comment-content">{{comment.content}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="no-more">—— 已经到底啦 ——</view>
+    </scroll-view>
+    
+    <view class="add-btn" bindtap="navToPublish">+</view>
+  </block>
+
+  <block wx:if="{{currentTab === 'rank'}}">
+    <view class="rank-list">
+      <view class="rank-item" wx:for="{{rankList}}" wx:key="_id">
+        <text class="rank-num {{index < 3 ? 'top-three' : ''}}">{{index + 1}}</text>
+        <image class="rank-avatar" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+        <text class="rank-name">{{item.nickName}}</text>
+        <text class="rank-points">{{item.points || 0}} 分</text>
+      </view>
+    </view>
+  </block>
+</view>

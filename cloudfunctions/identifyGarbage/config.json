@@ -1,6 +1,6 @@
 {
-  "permissions": {
-    "openapi": [
-    ]
-  }
+  "QQ_MAP_KEY":"3O2BZ-7QVCB-TU7UU-JIVSJ-2RZ3H-X6FC6",
+  "BAIDU_API_KEY":"DjaJX8t1knCuL7WSKCAgqCRt",
+  "BAIDU_SECRET_KEY":"YfsnX5Fnz6jcTTQwdAA6THjjrKdpGf2m",
+  "TIAN_API_KEY":"e58e7ab63e24c2bd9e673871987c1fef"
 }
