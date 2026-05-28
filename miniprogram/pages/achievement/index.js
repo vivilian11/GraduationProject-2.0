@@ -37,7 +37,7 @@ Page({
     wx.hideLoading();
   },
 
-  // 1. 获取当前用户积分
+  // 获取当前用户积分
   fetchUserPoints() {
     return db.collection('users').where({ _openid: '{openid}' }).get().then(res => {
       if (res.data.length > 0) {
@@ -46,7 +46,7 @@ Page({
     });
   },
 
-  // 2. 获取用户已经兑换的勋章 ID 列表
+  // 获取用户已经兑换的勋章 ID 列表
   fetchUserBadges() {
     return db.collection('user_badges').where({ _openid: '{openid}' }).get().then(res => {
       const ownedIds = res.data.map(item => item.badgeId);
@@ -61,11 +61,11 @@ Page({
     });
   },
 
-  // 3. 处理勋章点击事件
+  // 处理勋章点击事件
   onBadgeTap(e) {
     const item = e.currentTarget.dataset.item;
     
-    // 判断是否已经点亮（自动或已买）
+    // 判断是否已经点亮
     const isUnlocked = (item.id <= 3 && this.data.totalPoints >= item.threshold) || (item.id > 3 && item.isOwned);
     
     if (isUnlocked) {
@@ -93,12 +93,12 @@ Page({
     }
   },
 
-  // 4. 关闭弹窗
+  // 关闭弹窗
   closeModal() {
     this.setData({ showModal: false });
   },
 
-  // 5. 执行兑换逻辑
+  // 执行兑换逻辑
   confirmRedeem() {
     if (this.data.totalPoints < 10) {
       wx.showToast({ title: '积分不足哦', icon: 'none' });

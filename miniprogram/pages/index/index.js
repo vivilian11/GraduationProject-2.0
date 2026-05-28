@@ -18,7 +18,7 @@ Page({
     this.fetchRandomTip();
   },
 
-  // ─── 1. 获取用户积分 ───────────────────────────────────────────
+  // 获取用户积分 
   fetchUserPoints() {
     db.collection('users')
       .where({ _openid: '{openid}' })
@@ -31,7 +31,7 @@ Page({
       .catch(err => console.error('获取积分失败', err));
   },
 
-  // ─── 2. 随机环保小贴士 ──────────────────────────────────────────
+  // 随机环保小贴士 
   fetchRandomTip() {
     wx.cloud.callFunction({
       name: 'getHomeTips',
@@ -46,7 +46,7 @@ Page({
     });
   },
 
-  // ─── 3. 分类图鉴逻辑 (修复图片显示问题) ──────────────────────────
+  // 分类图鉴逻辑 
   onOpenAtlas() {
     this.setData({ atlasVisible: true });
     // 如果还没加载过数据，或者列表为空，则去加载
@@ -62,12 +62,10 @@ Page({
   fetchAtlasData() {
     this.setData({ atlasLoading: true });
     db.collection('garbage_atlas').get().then(res => {
-      // 核心修改：不再调用 getTempFileURL
-      // 直接使用数据库里的 imageUrl (格式为 cloud://...)
       const list = res.data.map(item => {
         return {
           ...item,
-          displayUrl: item.imageUrl // 创建一个专门用于展示的字段
+          displayUrl: item.imageUrl 
         }
       });
 
@@ -103,7 +101,7 @@ Page({
     });
   },
 
-  // ─── 4. 垃圾识别逻辑 ──────────────────────────────────────────
+  // 垃圾识别逻辑 
   onTakePhoto() {
     wx.chooseImage({
       count: 1,
@@ -152,7 +150,6 @@ Page({
         if (res.result && res.result.success) {
           const data = res.result.data;
         // 将记录存入数据库
-        // 这里的 content 在 image 模式下就是 FileID
         db.collection('garbage_records').add({
           data: {
             name: data.name,           // 垃圾名称
@@ -183,7 +180,7 @@ Page({
     });
   },
 
-  // ─── 5. 签到与问答 ────────────────────────────────────────────
+  // 签到与问答 
   onCheckIn() {
     wx.showLoading({ title: '签到中...' });
     this.callHandlePoints('checkin'); // 签到加1分
@@ -221,7 +218,7 @@ Page({
     }
   },
 
-  // ─── 6. 积分统一调度中心 ──────────────────────────────────────
+  // 积分调度
   callHandlePoints(actionType, quizCorrect = false) {
     wx.cloud.callFunction({
       name: 'handlePoints',

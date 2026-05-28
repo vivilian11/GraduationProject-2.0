@@ -1,0 +1,54 @@
+<!--pages/admin/community-manage/community-manage.wxml-->
+<view class="page">
+  <!-- Tab 切换 -->
+  <view class="tab-bar">
+    <view class="tab {{activeTab === 'posts' ? 'active' : ''}}" bindtap="switchTab" data-tab="posts">帖子列表</view>
+    <view class="tab {{activeTab === 'comments' ? 'active' : ''}}" bindtap="switchTab" data-tab="comments">评论列表</view>
+  </view>
+
+  <!-- 帖子列表 -->
+  <view class="list" wx:if="{{activeTab === 'posts'}}">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="card-header">
+        <text class="post-author">{{item.nickName || '匿名用户'}}</text>
+        <text class="card-time">{{item.createTime}}</text>
+      </view>
+      <text class="post-content">{{item.content}}</text>
+      <image wx:if="{{item.imageUrl}}" src="{{item.imageUrl}}" class="post-img" mode="aspectFill"></image>
+      <view class="card-footer">
+        <text class="meta">👍 {{item.likeCount || 0}}  💬 {{item.commentCount || 0}}</text>
+        <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}" data-col="posts">删除帖子</view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <text class="empty-icon">💬</text>
+      <text class="empty-text">暂无帖子</text>
+    </view>
+  </view>
+
+  <!-- 评论列表 -->
+  <view class="list" wx:if="{{activeTab === 'comments'}}">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="card-header">
+        <text class="post-author">{{item.nickName || '匿名用户'}}</text>
+        <text class="card-time">{{item.createTime}}</text>
+      </view>
+      <text class="post-content">{{item.content}}</text>
+      <view class="card-footer">
+        <text class="meta">所属帖子 ID: {{item.postId}}</text>
+        <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}" data-col="comments">删除评论</view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <text class="empty-icon">💬</text>
+      <text class="empty-text">暂无评论</text>
+    </view>
+  </view>
+
+  <!-- 分页 -->
+  <view class="pagination" wx:if="{{list.length > 0}}">
+    <view class="page-btn {{page === 0 ? 'disabled' : ''}}" bindtap="prevPage">上一页</view>
+    <text class="page-info">第 {{page + 1}} 页</text>
+    <view class="page-btn {{list.length < pageSize ? 'disabled' : ''}}" bindtap="nextPage">下一页</view>
+  </view>
+</view>

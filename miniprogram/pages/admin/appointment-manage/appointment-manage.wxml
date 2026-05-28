@@ -1,0 +1,61 @@
+<!--pages/admin/appointment-manage/appointment-manage.wxml-->
+<view class="page">
+  <!-- 顶部筛选栏 -->
+  <view class="filter-bar">
+    <view class="filter-item {{filterStatus === -1 ? 'active' : ''}}" bindtap="setFilter" data-status="-1">全部</view>
+    <view class="filter-item {{filterStatus === 0 ? 'active' : ''}}" bindtap="setFilter" data-status="0">待处理</view>
+    <view class="filter-item {{filterStatus === 1 ? 'active' : ''}}" bindtap="setFilter" data-status="1">处理中</view>
+    <view class="filter-item {{filterStatus === 2 ? 'active' : ''}}" bindtap="setFilter" data-status="2">已回收</view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="list">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="card-top">
+        <view class="status-tag status-{{item.status}}">
+          <text>{{item.status === 0 ? '待处理' : item.status === 1 ? '处理中' : '已回收'}}</text>
+        </view>
+        <text class="card-time">{{item.dateString}}</text>
+      </view>
+      <view class="card-row">
+        <text class="label">垃圾类型</text>
+        <text class="value">{{item.garbageName}}</text>
+      </view>
+      <view class="card-row">
+        <text class="label">预约人</text>
+        <text class="value">{{item.name}}</text>
+      </view>
+      <view class="card-row">
+        <text class="label">联系电话</text>
+        <text class="value">{{item.phone}}</text>
+      </view>
+      <view class="card-row">
+        <text class="label">上门地址</text>
+        <text class="value">{{item.address}}</text>
+      </view>
+      <!-- 状态操作按钮 -->
+      <view class="card-actions" wx:if="{{item.status < 2}}">
+        <view class="btn btn-next" bindtap="nextStatus" data-id="{{item._id}}" data-status="{{item.status}}">
+          <text>{{item.status === 0 ? '标记处理中' : '标记已回收'}}</text>
+        </view>
+        <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}">删除</view>
+      </view>
+      <view class="card-actions" wx:else>
+        <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}">删除记录</view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <text class="empty-icon">📭</text>
+      <text class="empty-text">暂无预约记录</text>
+    </view>
+  </view>
+
+  <!-- 分页 -->
+  <view class="pagination" wx:if="{{list.length > 0}}">
+    <view class="page-btn {{page === 0 ? 'disabled' : ''}}" bindtap="prevPage">上一页</view>
+    <text class="page-info">第 {{page + 1}} 页</text>
+    <view class="page-btn {{list.length < pageSize ? 'disabled' : ''}}" bindtap="nextPage">下一页</view>
+  </view>
+</view>

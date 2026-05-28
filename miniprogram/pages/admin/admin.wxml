@@ -1,0 +1,83 @@
+<view class="page" wx:if="{{isAdmin}}">
+
+<!-- 顶部头部 -->
+<view class="header">
+  <view class="header-bg"></view>
+  <view class="header-content">
+    <view class="header-title-row">
+      <text class="header-title">管理控制台</text>
+      <view class="header-badge">
+        <text class="header-badge-text">ADMIN</text>
+      </view>
+    </view>
+    <text class="header-sub">智能垃圾分类助手 · 后台系统</text>
+  </view>
+</view>
+
+<!-- 6个功能模块 -->
+<view class="section-title">功能模块</view>
+<view class="grid">
+
+  <view class="card card-blue" bindtap="navTo" data-page="appointment-manage">
+    <view class="card-icon-wrap blue-bg">
+      <text class="card-icon">🗓️</text>
+    </view>
+    <text class="card-name">预约管理</text>
+    <text class="card-desc">处理回收预约订单</text>
+  </view>
+
+  <view class="card card-orange" bindtap="navTo" data-page="community-manage">
+    <view class="card-icon-wrap orange-bg">
+      <text class="card-icon">💬</text>
+    </view>
+    <text class="card-name">社区管理</text>
+    <text class="card-desc">帖子与评论审核</text>
+  </view>
+
+  <view class="card card-green" bindtap="navTo" data-page="garbage-manage">
+    <view class="card-icon-wrap green-bg">
+      <text class="card-icon">📚</text>
+    </view>
+    <text class="card-name">图鉴管理</text>
+    <text class="card-desc">垃圾分类图鉴维护</text>
+  </view>
+
+  <view class="card card-teal" bindtap="navTo" data-page="knowledge-manage">
+    <view class="card-icon-wrap teal-bg">
+      <text class="card-icon">🌿</text>
+    </view>
+    <text class="card-name">知识管理</text>
+    <text class="card-desc">科普文章与题库</text>
+  </view>
+
+  <view class="card card-purple" bindtap="navTo" data-page="bin-manage">
+    <view class="card-icon-wrap purple-bg">
+      <text class="card-icon">🗑️</text>
+    </view>
+    <text class="card-name">地图管理</text>
+    <text class="card-desc">垃圾桶位置维护</text>
+  </view>
+
+  <view class="card card-gray" bindtap="navTo" data-page="user-manage">
+    <view class="card-icon-wrap gray-bg">
+      <text class="card-icon">👥</text>
+    </view>
+    <text class="card-name">用户管理</text>
+    <text class="card-desc">用户积分与徽章</text>
+  </view>
+
+</view>
+</view>
+
+<!-- 鉴权中（未完成校验） -->
+<view class="loading-box" wx:if="{{!isAdmin && !hasChecked}}">
+<view class="loading-spinner"></view>
+<text class="loading-text">权限校验中...</text>
+</view>
+
+<!-- 无权限 -->
+<view class="unauth-box" wx:if="{{!isAdmin && hasChecked}}">
+<text class="unauth-icon">🔒</text>
+<text class="unauth-title">访问被拒绝</text>
+<text class="unauth-desc">您的账号没有管理员权限</text>
+</view>

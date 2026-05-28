@@ -10,7 +10,14 @@
     "pages/example/index",
     "pages/help-center/help-center",
     "pages/appointment/appointment",
-    "pages/publish/publish"
+    "pages/publish/publish",
+    "pages/admin/admin",
+    "pages/admin/appointment-manage/appointment-manage",
+    "pages/admin/community-manage/community-manage",
+    "pages/admin/garbage-manage/garbage-manage",
+    "pages/admin/knowledge-manage/knowledge-manage",
+    "pages/admin/bin-manage/bin-manage",
+    "pages/admin/user-manage/user-manage"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

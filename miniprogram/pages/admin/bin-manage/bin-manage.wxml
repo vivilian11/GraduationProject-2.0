@@ -1,0 +1,75 @@
+<!--pages/admin/bin-manage/bin-manage.wxml-->
+<view class="page">
+  <view class="top-bar">
+    <input class="search-input" placeholder="搜索名称或地址..." bindinput="onSearch" value="{{keyword}}" />
+    <view class="add-btn" bindtap="openAdd">＋ 新增</view>
+  </view>
+
+  <view class="list">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="card-left">
+        <view class="bin-icon">🗑️</view>
+      </view>
+      <view class="card-info">
+        <view class="card-top-row">
+          <text class="bin-name">{{item.name}}</text>
+          <view class="type-tag">{{item.type}}</view>
+        </view>
+        <text class="bin-address">📍 {{item.address}}</text>
+        <text class="bin-loc" wx:if="{{item.location}}">
+          经度 {{item.location.coordinates ? item.location.coordinates[0] : '--'}}  纬度 {{item.location.coordinates ? item.location.coordinates[1] : '--'}}
+        </text>
+        <view class="card-actions">
+          <view class="btn btn-edit" bindtap="openEdit" data-item="{{item}}">编辑</view>
+          <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}">删除</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <text class="empty-icon">🗺️</text>
+      <text class="empty-text">暂无垃圾桶数据</text>
+    </view>
+  </view>
+
+  <view class="pagination" wx:if="{{list.length > 0}}">
+    <view class="page-btn {{page === 0 ? 'disabled' : ''}}" bindtap="prevPage">上一页</view>
+    <text class="page-info">第 {{page + 1}} 页</text>
+    <view class="page-btn {{list.length < pageSize ? 'disabled' : ''}}" bindtap="nextPage">下一页</view>
+  </view>
+</view>
+
+<!-- 新增/编辑弹窗 -->
+<view class="modal-mask" wx:if="{{showModal}}" bindtap="closeModal">
+  <view class="modal" catchtap="noop">
+    <text class="modal-title">{{editItem._id ? '编辑垃圾桶' : '新增垃圾桶'}}</text>
+
+    <view class="form-row">
+      <text class="form-label">名称</text>
+      <input class="form-input" value="{{editItem.name}}" bindinput="onInput" data-field="name" placeholder="如：十字路口垃圾桶" />
+    </view>
+    <view class="form-row">
+      <text class="form-label">地址</text>
+      <input class="form-input" value="{{editItem.address}}" bindinput="onInput" data-field="address" placeholder="如：向阳南路" />
+    </view>
+    <view class="form-row">
+      <text class="form-label">类型</text>
+      <picker bindchange="onTypePick" value="{{typeIndex}}" range="{{typeOptions}}">
+        <view class="form-picker">{{editItem.type || '请选择类型'}}</view>
+      </picker>
+    </view>
+    <view class="form-row">
+      <text class="form-label">经度</text>
+      <input class="form-input" value="{{editItem.longitude}}" bindinput="onInput" data-field="longitude" placeholder="如：117.884995" type="digit" />
+    </view>
+    <view class="form-row">
+      <text class="form-label">纬度</text>
+      <input class="form-input" value="{{editItem.latitude}}" bindinput="onInput" data-field="latitude" placeholder="如：31.587839" type="digit" />
+    </view>
+    <view class="location-tip">💡 可在腾讯地图坐标拾取器获取经纬度</view>
+
+    <view class="modal-actions">
+      <view class="btn btn-cancel" bindtap="closeModal">取消</view>
+      <view class="btn btn-save" bindtap="saveItem">保存</view>
+    </view>
+  </view>
+</view>

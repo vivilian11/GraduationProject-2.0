@@ -1,0 +1,145 @@
+/* pages/admin/knowledge-manage/knowledge-manage.wxss */
+page { background: #f4f6f9; }
+
+.tab-bar {
+  display: flex;
+  background: #fff;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.06);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 28rpx 0;
+  font-size: 28rpx;
+  color: #999;
+  border-bottom: 4rpx solid transparent;
+}
+.tab.active {
+  color: #1a73e8;
+  font-weight: bold;
+  border-bottom-color: #1a73e8;
+}
+
+.top-bar {
+  padding: 20rpx 24rpx 0;
+  display: flex;
+  justify-content: flex-end;
+}
+.add-btn {
+  background: #1a73e8;
+  color: #fff;
+  padding: 16rpx 32rpx;
+  border-radius: 20rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
+.list { padding: 16rpx 24rpx 40rpx; }
+
+.card {
+  background: #fff;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+.card-body { padding: 28rpx; }
+
+/* 科普知识 */
+.tip-content {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.7;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+/* 题目 */
+.quiz-question {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #1a1a1a;
+  display: block;
+  margin-bottom: 20rpx;
+  line-height: 1.5;
+}
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 20rpx;
+  margin-bottom: 10rpx;
+  border-radius: 12rpx;
+  background: #f4f6f9;
+  font-size: 26rpx;
+  color: #444;
+}
+.option-item.correct {
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-weight: bold;
+}
+.option-label { margin-right: 8rpx; font-weight: bold; }
+.correct-mark { color: #2e7d32; margin-left: 8rpx; }
+
+.card-actions { display: flex; gap: 16rpx; margin-top: 20rpx; }
+.btn {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+.btn-edit   { background: #e8f0fe; color: #1a73e8; }
+.btn-del    { background: #fce8e6; color: #d93025; }
+.btn-cancel { background: #f4f6f9; color: #666; }
+.btn-save   { background: #1a73e8; color: #fff; }
+
+.empty {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 120rpx 0; gap: 20rpx;
+}
+.empty-icon { font-size: 80rpx; }
+.empty-text { font-size: 28rpx; color: #bbb; }
+
+.pagination {
+  display: flex; justify-content: center; align-items: center;
+  padding: 20rpx 0 60rpx; gap: 40rpx;
+}
+.page-btn { background: #1a73e8; color: #fff; padding: 16rpx 40rpx; border-radius: 14rpx; font-size: 26rpx; }
+.page-btn.disabled { background: #ccc; }
+.page-info { font-size: 26rpx; color: #666; }
+
+/* 弹窗 */
+.modal-mask {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: flex-end;
+  z-index: 100;
+}
+.modal {
+  background: #fff;
+  border-radius: 32rpx 32rpx 0 0;
+  padding: 40rpx 32rpx 60rpx;
+  width: 100%;
+  box-sizing: border-box;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-title { font-size: 36rpx; font-weight: bold; color: #1a1a1a; display: block; margin-bottom: 36rpx; }
+.form-row { margin-bottom: 28rpx; }
+.form-label { font-size: 26rpx; color: #666; display: block; margin-bottom: 12rpx; }
+.form-input, .form-picker {
+  width: 100%; background: #f4f6f9; border-radius: 16rpx;
+  padding: 20rpx 24rpx; font-size: 28rpx; color: #333;
+  box-sizing: border-box;
+}
+.form-textarea {
+  width: 100%; background: #f4f6f9; border-radius: 16rpx;
+  padding: 20rpx 24rpx; font-size: 28rpx; color: #333;
+  min-height: 180rpx; box-sizing: border-box;
+}
+.modal-actions { display: flex; gap: 20rpx; margin-top: 40rpx; }

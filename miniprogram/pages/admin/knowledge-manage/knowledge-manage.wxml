@@ -1,0 +1,108 @@
+<!--pages/admin/knowledge-manage/knowledge-manage.wxml-->
+<view class="page">
+  <!-- Tab 切换 -->
+  <view class="tab-bar">
+    <view class="tab {{activeTab === 'tips' ? 'active' : ''}}" bindtap="switchTab" data-tab="tips">科普知识</view>
+    <view class="tab {{activeTab === 'quiz' ? 'active' : ''}}" bindtap="switchTab" data-tab="quiz">知识题库</view>
+  </view>
+
+  <!-- 顶部新增按钮 -->
+  <view class="top-bar">
+    <view class="add-btn" bindtap="openAdd">＋ 新增{{activeTab === 'tips' ? '知识' : '题目'}}</view>
+  </view>
+
+  <!-- 科普知识列表（只有 content 字段） -->
+  <view class="list" wx:if="{{activeTab === 'tips'}}">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="card-body">
+        <text class="tip-content">{{item.content}}</text>
+        <view class="card-actions">
+          <view class="btn btn-edit" bindtap="openEdit" data-item="{{item}}">编辑</view>
+          <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}" data-col="garbage_tips">删除</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <text class="empty-icon">🌿</text>
+      <text class="empty-text">暂无科普知识</text>
+    </view>
+  </view>
+
+  <!-- 题库列表（answerA/answerB/correct/question） -->
+  <view class="list" wx:if="{{activeTab === 'quiz'}}">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="card-body">
+        <text class="quiz-question">{{item.question}}</text>
+        <view class="option-item {{item.correct === 'A' ? 'correct' : ''}}">
+          <text class="option-label">A. </text>
+          <text>{{item.answerA}}</text>
+          <text wx:if="{{item.correct === 'A'}}" class="correct-mark"> ✓</text>
+        </view>
+        <view class="option-item {{item.correct === 'B' ? 'correct' : ''}}">
+          <text class="option-label">B. </text>
+          <text>{{item.answerB}}</text>
+          <text wx:if="{{item.correct === 'B'}}" class="correct-mark"> ✓</text>
+        </view>
+        <view class="card-actions">
+          <view class="btn btn-edit" bindtap="openEdit" data-item="{{item}}">编辑</view>
+          <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}" data-col="garbage_quiz">删除</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <text class="empty-icon">❓</text>
+      <text class="empty-text">暂无题目</text>
+    </view>
+  </view>
+
+  <!-- 分页 -->
+  <view class="pagination" wx:if="{{list.length > 0}}">
+    <view class="page-btn {{page === 0 ? 'disabled' : ''}}" bindtap="prevPage">上一页</view>
+    <text class="page-info">第 {{page + 1}} 页</text>
+    <view class="page-btn {{list.length < pageSize ? 'disabled' : ''}}" bindtap="nextPage">下一页</view>
+  </view>
+</view>
+
+<!-- 科普知识弹窗（只有 content） -->
+<view class="modal-mask" wx:if="{{showModal && activeTab === 'tips'}}" bindtap="closeModal">
+  <view class="modal" catchtap="noop">
+    <text class="modal-title">{{editItem._id ? '编辑知识' : '新增知识'}}</text>
+    <view class="form-row">
+      <text class="form-label">内容</text>
+      <textarea class="form-textarea" value="{{editItem.content}}" bindinput="onInput" data-field="content" placeholder="请输入科普知识内容"></textarea>
+    </view>
+    <view class="modal-actions">
+      <view class="btn btn-cancel" bindtap="closeModal">取消</view>
+      <view class="btn btn-save" bindtap="saveItem">保存</view>
+    </view>
+  </view>
+</view>
+
+<!-- 题目弹窗（answerA/answerB/correct/question） -->
+<view class="modal-mask" wx:if="{{showModal && activeTab === 'quiz'}}" bindtap="closeModal">
+  <view class="modal" catchtap="noop">
+    <text class="modal-title">{{editItem._id ? '编辑题目' : '新增题目'}}</text>
+    <view class="form-row">
+      <text class="form-label">题目</text>
+      <input class="form-input" value="{{editItem.question}}" bindinput="onInput" data-field="question" placeholder="请输入题目" />
+    </view>
+    <view class="form-row">
+      <text class="form-label">选项 A</text>
+      <input class="form-input" value="{{editItem.answerA}}" bindinput="onInput" data-field="answerA" placeholder="请输入选项A" />
+    </view>
+    <view class="form-row">
+      <text class="form-label">选项 B</text>
+      <input class="form-input" value="{{editItem.answerB}}" bindinput="onInput" data-field="answerB" placeholder="请输入选项B" />
+    </view>
+    <view class="form-row">
+      <text class="form-label">正确答案</text>
+      <picker bindchange="onCorrectPick" value="{{editItem.correct === 'B' ? 1 : 0}}" range="{{['A', 'B']}}">
+        <view class="form-picker">{{editItem.correct || '请选择正确答案'}}</view>
+      </picker>
+    </view>
+    <view class="modal-actions">
+      <view class="btn btn-cancel" bindtap="closeModal">取消</view>
+      <view class="btn btn-save" bindtap="saveItem">保存</view>
+    </view>
+  </view>
+</view>

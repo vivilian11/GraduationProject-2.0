@@ -14,14 +14,14 @@ Page({
     this.fetchData();
   },
 
-  // 1. 获取当前用户信息（用于评论）
+  // 获取当前用户信息（用于评论）
   fetchUserInfo() {
     db.collection('users').where({ _openid: '{openid}' }).get().then(res => {
       if (res.data.length > 0) this.setData({ userInfo: res.data[0] });
     });
   },
 
-  // 2. 统一刷新数据
+  // 统一刷新数据
   fetchData() {
     if (this.data.currentTab === 'feed') {
       this.fetchPosts();
@@ -30,7 +30,7 @@ Page({
     }
   },
 
-  // 3. 获取帖子及关联评论
+  // 获取帖子及关联评论
   async fetchPosts() {
     wx.showLoading({ title: '加载中' });
     const res = await db.collection('posts').orderBy('createTime', 'desc').get();
@@ -51,7 +51,7 @@ Page({
     wx.hideLoading();
   },
 
-  // 4. 获取排行榜
+  // 获取排行榜
   fetchRankList() {
     wx.cloud.callFunction({
       name: 'getRankList',
@@ -68,7 +68,7 @@ Page({
     });
   },
 
-  // 5. 点赞逻辑
+  // 点赞逻辑
   likePost(e) {
     const { id, index } = e.currentTarget.dataset;
     db.collection('posts').doc(id).update({
@@ -81,7 +81,7 @@ Page({
     });
   },
 
-  // 6. 评论逻辑
+  // 评论逻辑
   onCommentTap(e) {
     const postId = e.currentTarget.dataset.id;
     wx.showModal({
@@ -108,7 +108,7 @@ Page({
     this.fetchPosts(); // 重新拉取列表显示评论
   },
 
-  // 7. 其他交互
+  // 其他交互
   switchTab(e) {
     this.setData({ currentTab: e.currentTarget.dataset.tab }, () => this.fetchData());
   },

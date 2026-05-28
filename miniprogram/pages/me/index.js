@@ -35,5 +35,13 @@ Page({
     wx.navigateTo({
       url: `/pages/${url}/${url}`
     });
+  },
+
+  // 跳转管理员后台
+  navToAdmin() {
+    if (!this.data.userInfo.isAdmin) return;
+    wx.navigateTo({
+      url: '/pages/admin/admin'
+    });
   }
 });

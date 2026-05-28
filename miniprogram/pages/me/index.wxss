@@ -67,3 +67,16 @@ page { background-color: #f7f8fa; }
   font-weight: normal !important;
   line-height: normal !important;
 }
+
+/* 管理员入口 */
+.admin-section {
+  margin-top: 24rpx;
+  border: 2rpx solid #ffe58f;
+}
+.admin-item {
+  border-bottom: none !important;
+}
+.admin-text {
+  color: #d48806 !important;
+  font-weight: bold;
+}

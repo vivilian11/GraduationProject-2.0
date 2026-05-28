@@ -1,4 +1,4 @@
-// 1. 引入配置文件获取 Key
+// 引入配置文件获取 Key
 const config = require('./config.js');
 const db = wx.cloud.database();
 const _ = db.command;
@@ -36,12 +36,12 @@ Page({
     });
   },
 
-  // 获取附近 5 公里内的垃圾桶
+  // 获取附近 500米 内的垃圾桶
   fetchNearbyBins(lat, lng) {
     db.collection('waste_bins').where({
       location: _.geoNear({
-        geometry: db.Geo.Point(lng, lat), // 注意：经度在前，纬度在后
-        maxDistance: 5000, 
+        geometry: db.Geo.Point(lng, lat), // 经度在前，纬度在后
+        maxDistance: 500, 
       })
     }).get().then(res => {
       const markers = res.data.map(item => {
@@ -50,7 +50,7 @@ Page({
           latitude: item.location.latitude,
           longitude: item.location.longitude,
           title: item.name,
-          iconPath: '/images/map/bin_1.png', // 你的图标路径
+          iconPath: '/images/map/bin_1.png', 
           width: 34,
           height: 34,
           data: item

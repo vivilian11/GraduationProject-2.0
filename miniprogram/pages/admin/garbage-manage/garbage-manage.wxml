@@ -1,0 +1,76 @@
+<view class="page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索垃圾名称..." bindinput="onSearch" value="{{keyword}}" />
+    <view class="add-btn" bindtap="openAdd">＋ 新增</view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="list">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <image class="item-img" src="{{item.imageUrl}}" mode="aspectFill"></image>
+      <view class="item-info">
+        <view class="item-top">
+          <text class="item-name">{{item.name}}</text>
+          <view class="type-tag type-{{item.type}}">{{item.typeLabel}}</view>
+        </view>
+        <text class="item-tip">{{item.tip}}</text>
+        <view class="item-actions">
+          <view class="btn btn-edit" bindtap="openEdit" data-item="{{item}}">编辑</view>
+          <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}">删除</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!loading && list.length === 0}}">
+      <text class="empty-icon">🔍</text>
+      <text class="empty-text">暂无数据</text>
+    </view>
+  </view>
+
+  <!-- 分页 -->
+  <view class="pagination" wx:if="{{list.length > 0}}">
+    <view class="page-btn {{page === 0 ? 'disabled' : ''}}" bindtap="prevPage">上一页</view>
+    <text class="page-info">第 {{page + 1}} 页</text>
+    <view class="page-btn {{list.length < pageSize ? 'disabled' : ''}}" bindtap="nextPage">下一页</view>
+  </view>
+</view>
+
+<!-- 新增/编辑弹窗 -->
+<view class="modal-mask" wx:if="{{showModal}}" bindtap="closeModal">
+  <view class="modal" catchtap="noop">
+    <text class="modal-title">{{editItem._id ? '编辑图鉴' : '新增图鉴'}}</text>
+
+    <view class="form-row">
+      <text class="form-label">垃圾名称</text>
+      <input class="form-input" value="{{editItem.name}}" bindinput="onInput" data-field="name" placeholder="请输入名称" />
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">分类</text>
+      <picker bindchange="onTypePick" value="{{editItem.type}}" range="{{typeOptions}}" range-key="label">
+        <view class="form-picker">{{editItem.typeLabel || '请选择分类'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">投放提示</text>
+      <textarea class="form-textarea" value="{{editItem.tip}}" bindinput="onInput" data-field="tip" placeholder="请输入投放提示"></textarea>
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">图片</text>
+      <view class="upload-area" bindtap="chooseImage">
+        <image wx:if="{{editItem.imageUrl}}" src="{{editItem.imageUrl}}" class="preview-img" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <text class="upload-icon">📷</text>
+          <text class="upload-text">点击上传图片</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="modal-actions">
+      <view class="btn btn-cancel" bindtap="closeModal">取消</view>
+      <view class="btn btn-save" bindtap="saveItem">保存</view>
+    </view>
+  </view>
+</view>
