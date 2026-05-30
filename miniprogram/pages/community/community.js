@@ -33,13 +33,13 @@ Page({
   // 获取帖子及关联评论
   async fetchPosts() {
     wx.showLoading({ title: '加载中' });
-    const res = await db.collection('posts').orderBy('createTime', 'desc').get();
+    const res = await db.collection('posts').where({ status: 1 }).orderBy('createTime', 'desc').get();
     let posts = res.data;
 
-    // 关联查询评论
+    // 关联查询审核通过的评论
     const promises = posts.map(async (post) => {
       const commentRes = await db.collection('comments')
-        .where({ postId: post._id })
+        .where({ postId: post._id, status: 1 })
         .orderBy('createTime', 'asc')
         .get();
       post.comments = commentRes.data;
@@ -102,10 +102,12 @@ Page({
         postId,
         content,
         authorName: this.data.userInfo.nickName || '环保卫士',
+        status: 0,
         createTime: db.serverDate()
       }
     });
-    this.fetchPosts(); // 重新拉取列表显示评论
+    wx.showToast({ title: '评论已提交，等待审核', icon: 'none' });
+    this.fetchPosts();
   },
 
   // 其他交互

@@ -73,13 +73,14 @@ Page({
           authorName: this.data.userInfo.nickName || '环保小卫士',
           authorAvatar: this.data.userInfo.avatarUrl || '/images/default-avatar.png',
           likeCount: 0,
+          status: 0,
           createTime: db.serverDate(),
           dateString: new Date().toLocaleString()
         }
       });
 
       wx.hideLoading();
-      wx.showToast({ title: '发布成功', icon: 'success' });
+      wx.showToast({ title: '发布成功，等待审核', icon: 'success' });
       
       // 第三步：返回社区页并刷新
       setTimeout(() => {
