@@ -6,18 +6,33 @@
     <view class="tab {{activeTab === 'comments' ? 'active' : ''}}" bindtap="switchTab" data-tab="comments">评论列表</view>
   </view>
 
+  <!-- 状态筛选 -->
+  <view class="status-filter">
+    <view class="filter-btn {{statusFilter === -1 ? 'active' : ''}}" bindtap="switchStatusFilter" data-val="-1">全部</view>
+    <view class="filter-btn pending {{statusFilter === 0 ? 'active' : ''}}" bindtap="switchStatusFilter" data-val="0">审核中</view>
+    <view class="filter-btn approved {{statusFilter === 1 ? 'active' : ''}}" bindtap="switchStatusFilter" data-val="1">已通过</view>
+    <view class="filter-btn rejected {{statusFilter === 2 ? 'active' : ''}}" bindtap="switchStatusFilter" data-val="2">已驳回</view>
+  </view>
+
   <!-- 帖子列表 -->
   <view class="list" wx:if="{{activeTab === 'posts'}}">
     <view class="card" wx:for="{{list}}" wx:key="_id">
       <view class="card-header">
-        <text class="post-author">{{item.nickName || '匿名用户'}}</text>
-        <text class="card-time">{{item.createTime}}</text>
+        <text class="post-author">{{item.authorName || '匿名用户'}}</text>
+        <view class="status-badge status-{{item.status}}">
+          {{item.status === 0 ? '审核中' : item.status === 1 ? '已通过' : '已驳回'}}
+        </view>
       </view>
+      <text class="card-time">{{item.dateString || item.createTime}}</text>
       <text class="post-content">{{item.content}}</text>
-      <image wx:if="{{item.imageUrl}}" src="{{item.imageUrl}}" class="post-img" mode="aspectFill"></image>
+      <image wx:if="{{item.images && item.images.length > 0}}" src="{{item.images[0]}}" class="post-img" mode="aspectFill"></image>
       <view class="card-footer">
-        <text class="meta">👍 {{item.likeCount || 0}}  💬 {{item.commentCount || 0}}</text>
-        <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}" data-col="posts">删除帖子</view>
+        <text class="meta">👍 {{item.likeCount || 0}}</text>
+        <view class="btn-group">
+          <view wx:if="{{item.status !== 1}}" class="btn btn-approve" bindtap="approveItem" data-id="{{item._id}}" data-col="posts">通过</view>
+          <view wx:if="{{item.status !== 2}}" class="btn btn-reject" bindtap="rejectItem" data-id="{{item._id}}" data-col="posts">驳回</view>
+          <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}" data-col="posts">删除</view>
+        </view>
       </view>
     </view>
     <view class="empty" wx:if="{{!loading && list.length === 0}}">
@@ -30,13 +45,20 @@
   <view class="list" wx:if="{{activeTab === 'comments'}}">
     <view class="card" wx:for="{{list}}" wx:key="_id">
       <view class="card-header">
-        <text class="post-author">{{item.nickName || '匿名用户'}}</text>
-        <text class="card-time">{{item.createTime}}</text>
+        <text class="post-author">{{item.authorName || '匿名用户'}}</text>
+        <view class="status-badge status-{{item.status}}">
+          {{item.status === 0 ? '审核中' : item.status === 1 ? '已通过' : '已驳回'}}
+        </view>
       </view>
+      <text class="card-time">{{item.createTime}}</text>
       <text class="post-content">{{item.content}}</text>
       <view class="card-footer">
-        <text class="meta">所属帖子 ID: {{item.postId}}</text>
-        <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}" data-col="comments">删除评论</view>
+        <text class="meta">所属帖子: {{item.postId}}</text>
+        <view class="btn-group">
+          <view wx:if="{{item.status !== 1}}" class="btn btn-approve" bindtap="approveItem" data-id="{{item._id}}" data-col="comments">通过</view>
+          <view wx:if="{{item.status !== 2}}" class="btn btn-reject" bindtap="rejectItem" data-id="{{item._id}}" data-col="comments">驳回</view>
+          <view class="btn btn-del" bindtap="confirmDelete" data-id="{{item._id}}" data-col="comments">删除</view>
+        </view>
       </view>
     </view>
     <view class="empty" wx:if="{{!loading && list.length === 0}}">
