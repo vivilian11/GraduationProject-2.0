@@ -40,6 +40,17 @@ exports.main = async (event, context) => {
   // 4. 执行删除
   try {
     await db.collection(collection).doc(docId).remove();
+
+    // 删除帖子时，级联删除该帖子下的所有评论
+    if (collection === 'posts') {
+      const commentsRes = await db.collection('comments').where({ postId: docId }).get();
+      if (commentsRes.data.length > 0) {
+        await Promise.all(
+          commentsRes.data.map(comment => db.collection('comments').doc(comment._id).remove())
+        );
+      }
+    }
+
     return { success: true };
   } catch (err) {
     return { success: false, error: err.message };
