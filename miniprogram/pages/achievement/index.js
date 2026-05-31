@@ -24,17 +24,16 @@ Page({
   },
 
   // 统一刷新数据：积分 + 已拥有勋章
-  async refreshData() {
+  refreshData() {
     wx.showLoading({ title: '加载中...' });
-    try {
-      await Promise.all([
-        this.fetchUserPoints(),
-        this.fetchUserBadges()
-      ]);
-    } catch (err) {
+    Promise.all([
+      this.fetchUserPoints(),
+      this.fetchUserBadges()
+    ]).catch(err => {
       console.error('数据加载失败', err);
-    }
-    wx.hideLoading();
+    }).finally(() => {
+      wx.hideLoading();
+    });
   },
 
   // 获取当前用户积分
