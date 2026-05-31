@@ -51,7 +51,12 @@ Page({
       .get()
       .then(res => {
         wx.hideLoading();
-        this.setData({ list: res.data, loading: false });
+        const list = res.data.map(item => ({
+          ...item,
+          status: item.status !== undefined ? item.status : 0,
+          displayTime: item.dateString || (item.createTime ? new Date(item.createTime).toLocaleString() : '未知时间')
+        }));
+        this.setData({ list, loading: false });
       })
       .catch(err => {
         wx.hideLoading();
