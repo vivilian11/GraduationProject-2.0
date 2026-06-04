@@ -34,10 +34,14 @@ Page({
       .get()
       .then(res => {
         wx.hideLoading();
-        const list = res.data.map(item => ({
-          ...item,
-          displayTime: item.updateTime ? new Date(item.updateTime).toLocaleString() : '--'
-        }));
+        const list = res.data.map(item => {
+          const rawId = (item._openid && item._openid !== 'undefined') ? item._openid : item._id;
+          return {
+            ...item,
+            displayId: rawId ? '...' + rawId.slice(-8) : '--',
+            displayTime: item.updateTime ? new Date(item.updateTime).toLocaleString() : '--'
+          };
+        });
         this.setData({ list, loading: false, expandedId: null });
       })
       .catch(err => {

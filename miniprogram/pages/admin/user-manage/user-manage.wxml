@@ -14,7 +14,7 @@
             <text class="user-name">{{item.nickName || '未知用户'}}</text>
             <view class="admin-badge" wx:if="{{item.isAdmin}}">管理员</view>
           </view>
-          <text class="user-openid">ID: {{item._openid ? '...' + item._openid.slice(-8) : item._id ? '...' + item._id.slice(-8) : '--'}}</text>
+          <text class="user-openid">ID: {{item.displayId}}</text>
         </view>
         <view class="user-points">
           <text class="points-num">{{item.points || 0}}</text>
