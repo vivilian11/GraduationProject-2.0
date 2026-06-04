@@ -34,7 +34,11 @@ Page({
       .get()
       .then(res => {
         wx.hideLoading();
-        this.setData({ list: res.data, loading: false, expandedId: null });
+        const list = res.data.map(item => ({
+          ...item,
+          displayTime: item.updateTime ? new Date(item.updateTime).toLocaleString() : '--'
+        }));
+        this.setData({ list, loading: false, expandedId: null });
       })
       .catch(err => {
         wx.hideLoading();

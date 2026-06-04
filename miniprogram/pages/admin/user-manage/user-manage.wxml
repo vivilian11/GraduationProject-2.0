@@ -26,14 +26,14 @@
       <view class="user-detail" wx:if="{{expandedId === item._id}}">
         <view class="detail-row">
           <text class="detail-label">最后更新</text>
-          <text class="detail-val">{{item.updateTime || '--'}}</text>
+          <text class="detail-val">{{item.displayTime}}</text>
         </view>
         <view class="detail-section-title">积分记录</view>
         <view wx:if="{{pointLogs[item._id] && pointLogs[item._id].length > 0}}">
           <view class="log-item" wx:for="{{pointLogs[item._id]}}" wx:key="_id" wx:for-item="log">
-            <text class="log-reason">{{log.reason || log.type || '--'}}</text>
-            <text class="log-points {{log.points > 0 ? 'positive' : 'negative'}}">
-              {{log.points > 0 ? '+' : ''}}{{log.points}}
+            <text class="log-reason">{{log.actionDesc || log.actionType || '--'}}</text>
+            <text class="log-points {{log.pointsAdded > 0 ? 'positive' : 'negative'}}">
+              {{log.pointsAdded > 0 ? '+' : ''}}{{log.pointsAdded}}
             </text>
           </view>
         </view>
